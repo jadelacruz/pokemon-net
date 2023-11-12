@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Exceptions\Auth\InvalidAuthException;
 use App\Http\Requests\CheckAuthRequest;
+use App\Services\Auth\CheckAuthService\CheckAuthService;
 use Illuminate\Http\JsonResponse;
 
 /**
@@ -13,23 +15,26 @@ class AuthApiController
 {
     /**
      * @param CheckAuthRequest $request
+     * @param CheckAuthService $service
      * @return JsonResponse
      */
-    public function auth(CheckAuthRequest $request): JsonResponse
+    public function auth(
+        CheckAuthRequest $request,
+        CheckAuthService $service
+    ): JsonResponse
     {
-        $attempt = auth()->attempt([
-            'username' => $request->getUsername(),
-            'password' => $request->getPassword()
-        ]);
+        try {
+            $service->handle($request);
+        } catch (InvalidAuthException $e) {
+            return response()->json([
+                'message' => $e->getMessage(),
+                'errors'  => [
+                    'username' => [],
+                    'password' => [ $e->getMessage() ]
+                ]
+            ], 401);
+        }
 
-        if ($attempt) return response()->json(['message' => 'Valid credentials']);
-
-        return response()->json([
-            'message' => 'Invalid credentials',
-            'errors'  => [
-                'username' => [],
-                'password' => ['Invalid credentials']
-            ]
-        ], 401);
+        return response()->json(['message' => 'Valid credentials']);
     }
 }

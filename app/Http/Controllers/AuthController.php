@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\Auth\InvalidAuthException;
 use App\Http\Requests\CheckAuthRequest;
+use App\Services\Auth\CheckAuthService\CheckAuthService;
 use Illuminate\Http\RedirectResponse;
 
 /**
@@ -11,19 +13,20 @@ use Illuminate\Http\RedirectResponse;
  */
 class AuthController extends Controller
 {
-
     /**
      * @param CheckAuthRequest $request
+     * @param CheckAuthService $service
      * @return RedirectResponse
+     * @throws InvalidAuthException
      */
-    public function auth(CheckAuthRequest $request): RedirectResponse
+    public function auth(
+        CheckAuthRequest $request,
+        CheckAuthService $service
+    ): RedirectResponse
     {
-        $attempt = auth()->attempt([
-            'username' => $request->getUsername(),
-            'password' => $request->getPassword()
-        ]);
+        $isCredentialsValid = $service->handle($request);
 
-        if ($attempt) {
+        if ($isCredentialsValid) {
             $request->session()->regenerate();
 
             return redirect()->intended('dashboard');

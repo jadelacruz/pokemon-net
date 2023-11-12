@@ -48,7 +48,7 @@
         } catch (e) {
             if (e.name === 'AxiosError') {
                 const { response } = e;
-
+                console.log(response);
                 if (response.status === 401) {
                     emit('show-toast', {
                         severity: 'error',
