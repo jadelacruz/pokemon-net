@@ -1,10 +1,11 @@
 <script setup>
 import { ref } from 'vue';
-import { useRouter } from 'vue-router'
+import { useRouter } from 'vue-router';
+
 // import MenuBar from 'primevue/menubar';
 
 const router = useRouter();
-const items = ref([
+const items  = ref([
     {
         label: 'Home',
         icon: 'pi pi-home'
@@ -18,6 +19,7 @@ const items = ref([
 </script>
 
 <template>
+
 <!--    <div class="card">-->
 <!--        <MenuBar :model="items" />-->
 <!--    </div>-->

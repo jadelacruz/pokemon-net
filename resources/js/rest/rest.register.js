@@ -1,7 +1,7 @@
-import axios from "axios";
+import axios from 'axios';
 
 const RegisterRest = {
-    create: () => axios.get('/')
+    create: (user) => axios.post('/api/user', user)
 };
 
 export default RegisterRest;
