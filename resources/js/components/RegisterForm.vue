@@ -7,7 +7,7 @@
     import Button from 'primevue/button';
     import RegisterRest from '../rest/rest.register';
 
-    const emit = defineEmits(['show-login', 'show-toast', ]);
+    const emit = defineEmits([ 'show-toast', 'cancel-registration' ]);
     const { name, username, password, rePassword } = useRegisterStore();
     const register = { name, username, password, rePassword };
 
@@ -94,7 +94,7 @@
                 class="control"
                 label="Cancel"
                 severity="warning"
-                @click.prevent="emit('show-login')">
+                @click.prevent="emit('cancel-registration')">
             </Button>
 
             <Button
