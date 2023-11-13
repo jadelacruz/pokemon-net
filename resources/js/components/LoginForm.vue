@@ -1,24 +1,25 @@
 <script setup>
-    import { defineEmits, ref, computed } from 'vue';
-    import { useUserStore } from '../stores/user';
+    import { defineEmits, ref } from 'vue';
+    import { useCredentialStore } from '../stores/credential';
 
+    import { handleValidationError } from '../common/utility';
     import InputText from 'primevue/inputtext';
     import Button from 'primevue/button';
     import AuthRest from '../rest/rest.auth';
 
-    const emit = defineEmits([ 'show-toast','show-register' ]);
-    const { name, username, password } = useUserStore();
-    const user    = { name, username, password };
-    const errors  = ref({});
+    const emit         = defineEmits([ 'show-toast','show-register' ]);
+    const credential   = { ...useCredentialStore() };
+    const errors       = ref({});
     const loginLoading = ref(false);
 
     const csrfToken = () => document.querySelector('meta[name="csrf-token"]').content;
     const login     = async () => {
         try {
-            loginLoading.value = true;
             errors.value       = {};
-            const { username, password } = user;
-            const response = await AuthRest.attempt({ username, password });
+            loginLoading.value = true;
+            console.log(credential);
+            const validForm = await credential.schema.validate(credential, { abortEarly: false });
+            const response  = await AuthRest.attempt(validForm);
 
             if (response && response.status === 200) {
                 emit('show-toast', {
@@ -33,9 +34,10 @@
                 }, 2000);
             }
         } catch (e) {
+            handleValidationError(errors, e);
+
             if (e.name === 'AxiosError') {
                 const { response } = e;
-                console.log(response);
                 if (response.status === 401) {
                     emit('show-toast', {
                         severity: 'error',
@@ -43,9 +45,9 @@
                         detail: response.data?.message,
                         life: 4000
                     });
+                } else {
+                    errors.value = e.response.data?.errors;
                 }
-
-                errors.value = e.response.data?.errors;
             }
 
             loginLoading.value = false;
@@ -62,26 +64,26 @@
                        :value="csrfToken()" />
             <div class="mb-1">
                 <InputText
-                    :class="{ 'input-fluid': true, 'p-invalid': errors['username'] }"
+                    :class="{ 'input-fluid': true, 'p-invalid': errors.email?.length }"
                     type="text"
-                    name="username"
-                    placeholder="Username"
-                    v-model="user.username">
+                    name="email"
+                    placeholder="Email"
+                    v-model="credential.email">
                 </InputText>
-                <small v-if="errors['username']"
-                       class="p-error">{{ errors['username'].pop() }}</small>
+                <small v-if="errors.email?.length"
+                       class="p-error">{{ errors.email[errors.email.length - 1] }}</small>
             </div>
 
             <div class="mb-1">
                 <InputText
-                    :class="{ 'input-fluid': true, 'p-invalid': errors['password'] }"
+                    :class="{ 'input-fluid': true, 'p-invalid': errors.password?.length }"
                     type="password"
                     name="password"
                     placeholder="Password"
-                    v-model="user.password">
+                    v-model="credential.password">
                 </InputText>
-                <small v-if="errors['password']"
-                       class="p-error">{{ errors['password'].pop() }}</small>
+                <small v-if="errors.password?.length"
+                       class="p-error">{{ errors.password[errors.password.length - 1] }}</small>
             </div>
 
             <div class="control-area">
@@ -101,7 +103,3 @@
             </div>
         </form>
 </template>
-
-<style scoped>
-
-</style>

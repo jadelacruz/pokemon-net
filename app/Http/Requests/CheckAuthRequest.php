@@ -20,17 +20,17 @@ class CheckAuthRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'username'   => 'required',
-            'password'   => 'required',
+            'email'    => 'required',
+            'password' => 'required',
         ];
     }
 
     /**
      * @return string
      */
-    public function getUsername(): string
+    public function getEmail(): string
     {
-        return $this->input('username');
+        return $this->input('email');
     }
 
     /**

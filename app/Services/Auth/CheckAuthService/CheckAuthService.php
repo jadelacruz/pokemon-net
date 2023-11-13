@@ -19,7 +19,7 @@ class CheckAuthService
     public function handle(CheckAuthRequest $request): bool
     {
         $authenticated = auth()->attempt([
-            'username' => $request->getUsername(),
+            'email'    => $request->getEmail(),
             'password' => $request->getPassword()
         ]);
 

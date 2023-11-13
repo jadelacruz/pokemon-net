@@ -18,8 +18,9 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'username',
+        'first_name',
+        'last_name',
+        'email',
         'password',
     ];
 
@@ -41,16 +42,25 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    /**
+     * @param string $firstName
+     * @param string $lastName
+     * @param string $email
+     * @param string $password
+     * @return User
+     */
     public static function createRecord(
-        string $name,
-        string $username,
+        string $firstName,
+        string $lastName,
+        string $email,
         string $password
     ): User
     {
         return self::create([
-            'name'     => $name,
-            'username' => $username,
-            'password' => Hash::make($password)
+            'first_name' => $firstName,
+            'last_name'  => $lastName,
+            'email'      => $email,
+            'password'   => Hash::make($password)
         ]);
     }
 }

@@ -20,8 +20,9 @@ class UserStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'       => 'required|min:6|max:50',
-            'username'   => 'required|min:8|max:16|unique:users,username',
+            'firstName'  => 'required|min:2|max:30',
+            'lastName'   => 'required|min:2|max:30',
+            'email'      => 'required|min:8|max:100|unique:users,email',
             'password'   => 'required|min:8|max:16',
             'rePassword' => 'required|same:password'
         ];
@@ -30,17 +31,25 @@ class UserStoreRequest extends FormRequest
     /**
      * @return string
      */
-    public function getName(): string
+    public function getFirstName(): string
     {
-        return $this->input('name');
+        return $this->input('firstName');
     }
 
     /**
      * @return string
      */
-    public function getUsername(): string
+    public function getLastName(): string
     {
-        return $this->input('username');
+        return $this->input('lastName');
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmail(): string
+    {
+        return $this->input('email');
     }
 
     /**

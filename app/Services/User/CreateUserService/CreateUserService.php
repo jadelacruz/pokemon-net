@@ -18,9 +18,10 @@ class CreateUserService
     public function handle(UserStoreRequest $request): User
     {
         return User::createRecord(
-            name:     $request->getName(),
-            username: $request->getUsername(),
-            password: $request->getPassword()
+            firstName: $request->getFirstName(),
+            lastName : $request->getLastName(),
+            email    : $request->getEmail(),
+            password : $request->getPassword()
         );
     }
 }

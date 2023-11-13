@@ -1,6 +1,7 @@
 <script setup>
     import { ref } from 'vue';
     import { useToast } from 'primevue/usetoast';
+
     import LoginForm from '../components/LoginForm.vue';
     import Toast from 'primevue/toast';
     import RegisterForm from '../components/RegisterForm.vue';
@@ -19,7 +20,7 @@
         <Toast position="bottom-center"/>
         <Card>
             <template #title>Pokemon Network</template>
-            <template #subtitle>Login Form</template>
+            <template #subtitle>{{ mode === modeEnum.login ? 'Login' : 'Registration '}} Form</template>
             <template #content>
                 <div class="form-group"
                      v-if="mode === modeEnum.login">

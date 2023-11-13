@@ -1,14 +1,48 @@
 <script setup>
-import LoginForm from '../components/LoginForm.vue';
-import { useToast } from 'primevue/usetoast';
-import Toast from 'primevue/toast';
+    import { ref, onMounted } from 'vue';
+    import { RouterView, useRouter } from 'vue-router'
+    import Menubar from 'primevue/menubar';
 
-const toast = useToast();
+    const router       = useRouter()
+    const initialRoute = '/pokemon';
+    const navbarItems  = ref([
+        {
+            label: 'Pokemon',
+            command: () => router.push('/pokemon')
+        },
+        {
+            label: 'Trainers',
+            command: () => router.push('/trainer')
+        }
+    ]);
+
+    onMounted(() => {
+        router.push(initialRoute);
+    });
+
 </script>
 
 <template>
     <main>
-        <Toast position="bottom-center" />
-        <LoginForm @show-toast="(config) => toast.add(config)" />
+        <Menubar :model="navbarItems">
+            <template #start>
+                <a href="/dashboard">
+                    <img class="nav-icon"
+                         alt="pokeball.svg"
+                         src="/img/pokeball.svg" />
+                </a>
+            </template>
+        </Menubar>
+
+        <RouterView />
     </main>
 </template>
+
+<style scoped>
+    .nav-icon {
+        border: 1px solid #000000;
+        margin-right: 10px;
+        height: 30px;
+        width: 30px;
+    }
+</style>
