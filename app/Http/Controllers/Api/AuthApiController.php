@@ -6,6 +6,7 @@ use App\Exceptions\Auth\InvalidAuthException;
 use App\Http\Requests\CheckAuthRequest;
 use App\Services\Auth\CheckAuthService\CheckAuthService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Session\SessionManager;
 
 /**
  * class AuthApiController
@@ -36,5 +37,19 @@ class AuthApiController
         }
 
         return response()->json(['message' => 'Valid credentials']);
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    public function signOut(): JsonResponse
+    {
+        $loggedOut = request()->user()->currentAccessToken()->delete();
+
+        if (!$loggedOut) {
+            return response()->json(['message' => 'An error occurred while trying to delete the token'], 500);
+        }
+
+        return response()->json(['message' => 'SPA token deleted']);
     }
 }

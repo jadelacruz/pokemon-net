@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../common/axios'
 
 const PokemonRest = {
     list: (offset = 0, limit = 10) => {

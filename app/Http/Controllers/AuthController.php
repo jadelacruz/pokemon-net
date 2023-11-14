@@ -27,11 +27,26 @@ class AuthController extends Controller
         $isCredentialsValid = $service->handle($request);
 
         if ($isCredentialsValid) {
-            $request->session()->regenerate();
+            $jwtToken = $request->user()
+                ->createToken('jwt-token');
+            $sessionManager = $request->session();
+            $sessionManager->regenerate();
+            $sessionManager->put('jwtToken', $jwtToken->plainTextToken);
 
             return redirect()->intended('dashboard');
         }
 
         return back()->withErrors(['message' => 'Invalid credentials']);
+    }
+
+    /**
+     * @return RedirectResponse
+     */
+    public function signOut(): RedirectResponse
+    {
+        session()->flush();
+
+        return redirect()->intended('login');
+
     }
 }

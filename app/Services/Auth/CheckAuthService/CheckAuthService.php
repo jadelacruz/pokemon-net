@@ -4,6 +4,7 @@ namespace App\Services\Auth\CheckAuthService;
 
 use App\Exceptions\Auth\InvalidAuthException;
 use App\Http\Requests\CheckAuthRequest;
+use Illuminate\Session\SessionManager;
 
 /**
  * class CheckAuthService

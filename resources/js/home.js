@@ -26,7 +26,7 @@ home.use(pinia);
 // PrimeVue Components
 home.component('InputText', InputText)
 home.component('Password', Password);
-home.component('button', Button);
+home.component('Button', Button);
 home.component('Card', Card);
 
 home.mount('#app')

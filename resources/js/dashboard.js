@@ -14,6 +14,7 @@ import Password from 'primevue/password';
 import Button from 'primevue/button';
 import Card from 'primevue/card';
 import Panel from 'primevue/panel';
+import Avatar from 'primevue/avatar';
 import 'primevue/resources/themes/mdc-light-deeppurple/theme.css'
 import 'primeicons/primeicons.css';
 
@@ -29,9 +30,10 @@ app.use(pinia);
 app.component('MenuBar', MenuBar);
 app.component('InputText', InputText)
 app.component('Password', Password);
-app.component('button', Button);
+app.component('Button', Button);
 app.component('Card', Card);
 app.component('Panel', Panel);
+app.component('Avatar', Avatar);
 
 app.mount('#app')
 

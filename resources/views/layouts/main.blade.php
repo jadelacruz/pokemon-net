@@ -7,7 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
     <title>Pokemon Network</title>
-
+    @yield('head')
     @vite(['resources/css/app.css'])
 </head>
 <body class="bg-gray">

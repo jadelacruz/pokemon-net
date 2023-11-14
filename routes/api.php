@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserApiController;
 use App\Http\Controllers\Api\AuthApiController;
@@ -16,11 +15,20 @@ use App\Http\Controllers\Api\PokemonApiController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+// Auth
+Route::post('auth', [AuthApiController::class, 'auth']);
+// User
+Route::post('user', [UserApiController::class, 'store']);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware('auth:sanctum')->group(function () {
+    // Auth
+    Route::post('logout', [AuthApiController::class, 'signOut']);
+
+    // User
+    Route::get('user', [UserApiController::class, 'show']);
+
+    // Pokemon
+    Route::get('pokemon', [PokemonApiController::class, 'list']);
 });
 
-Route::post('user', [UserApiController::class, 'store']);
-Route::post('auth', [AuthApiController::class, 'auth']);
-Route::get('pokemon', [PokemonApiController::class, 'list']);
+
