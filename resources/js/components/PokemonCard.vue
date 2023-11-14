@@ -51,6 +51,11 @@
                 severity="primary"></Button>
 
             <Button
+                label="Like"
+                icon="pi pi-thumbs-up"
+                severity="success"></Button>
+
+            <Button
                 label="Dislike"
                 icon="pi pi-thumbs-down"
                 severity="danger"></Button>

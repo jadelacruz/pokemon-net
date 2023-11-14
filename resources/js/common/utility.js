@@ -15,4 +15,18 @@ const handleAxiosError      = (errors, exception) => {
     errors.value = exception.response.data?.errors;
 }
 
-export { handleValidationError, handleAxiosError }
+const isAtBottom = () => {
+    const scrollTop = window.scrollY || window.pageYOffset;
+
+    const totalHeight = document.documentElement.scrollHeight;
+
+    const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+
+    return totalHeight - scrollTop - windowHeight < 10;
+}
+
+export {
+    handleValidationError,
+    handleAxiosError,
+    isAtBottom
+};

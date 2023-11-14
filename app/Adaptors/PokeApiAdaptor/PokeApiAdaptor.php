@@ -36,8 +36,8 @@ class PokeApiAdaptor
                      name
                      weight
                      pokemon_v2_pokemonsprites {
-                     id
-                     sprites
+                         id
+                         sprites
                    }
                 }
             }
