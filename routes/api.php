@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserApiController;
 use App\Http\Controllers\Api\AuthApiController;
+use App\Http\Controllers\Api\PokemonApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,3 +23,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('user', [UserApiController::class, 'store']);
 Route::post('auth', [AuthApiController::class, 'auth']);
+Route::get('pokemon', [PokemonApiController::class, 'list']);
