@@ -13,6 +13,7 @@ import Password from 'primevue/password';
 import Button from 'primevue/button';
 import Card from 'primevue/card';
 import 'primevue/resources/themes/mdc-light-deeppurple/theme.css'
+import 'primeicons/primeicons.css';
 
 const pinia = createPinia();
 const home   = createApp(Home);

@@ -41,7 +41,6 @@ class ListPokemonService
                 limit : $request->getLimit()
             );
 
-
         Cache::add($cacheListKey, $pokemonList, config('poke.cache.ttl'));
 
         return $pokemonList;

@@ -17,9 +17,8 @@
         try {
             errors.value       = {};
             loginLoading.value = true;
-            console.log(credential);
-            const validForm = await credential.schema.validate(credential, { abortEarly: false });
-            const response  = await AuthRest.attempt(validForm);
+            const validForm    = await credential.schema.validate(credential, { abortEarly: false });
+            const response     = await AuthRest.attempt(validForm);
 
             if (response && response.status === 200) {
                 emit('show-toast', {

@@ -4,7 +4,6 @@ namespace App\Adaptors\PokeApiAdaptor;
 
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\Response;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Http;
 
 /**
@@ -17,11 +16,8 @@ class PokeApiAdaptor
      * @param PendingRequest $httpClient
      */
     public function __construct(
-
         private PendingRequest $httpClient
-
-    )
-    {
+    ) {
         $this->httpClient = Http::withHeaders(config('poke.api.headers'));
     }
 

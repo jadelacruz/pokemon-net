@@ -24,7 +24,7 @@
 
 <template>
     <main>
-        <Menubar :model="navbarItems">
+        <Menubar :model="navbarItems" :pt="{ root: { style: 'background: white' } }">
             <template #start>
                 <a href="/dashboard">
                     <img class="nav-icon"
@@ -45,4 +45,6 @@
         height: 30px;
         width: 30px;
     }
+
+
 </style>

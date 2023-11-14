@@ -12,6 +12,10 @@
     margin: 0 10px;
 }
 
+.bg-gray {
+    background: #eeeeee;
+}
+
 .control-area {
     display: flex;
     justify-content: flex-end;

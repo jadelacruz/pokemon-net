@@ -13,7 +13,9 @@ import InputText from 'primevue/inputtext';
 import Password from 'primevue/password';
 import Button from 'primevue/button';
 import Card from 'primevue/card';
+import Panel from 'primevue/panel';
 import 'primevue/resources/themes/mdc-light-deeppurple/theme.css'
+import 'primeicons/primeicons.css';
 
 const pinia = createPinia();
 const app   = createApp(Dashboard);
@@ -29,6 +31,7 @@ app.component('InputText', InputText)
 app.component('Password', Password);
 app.component('button', Button);
 app.component('Card', Card);
+app.component('Panel', Panel);
 
 app.mount('#app')
 
