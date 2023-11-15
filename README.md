@@ -3,9 +3,15 @@
 ## Table of Contents
 - [Installation Locally](#installation-locally)
   - [Requirements](#requirements)
+  - [Clone the Repository](#clone-the-repository)
+  - [Checkout the working branch](#checkout-the-working-branch)
+  - [Install Packages](#install-packages)
+  - [Setup ENV](#setup-env)
+  - [DB Migration](#db-migration)
+- [Run Locally](#run-locally) 
 
 ## Installation Locally
-###
+### Requirements
 Before proceeding with the project setup, make sure that you have all the indicated requirements below.
 
 |Requirements                |
