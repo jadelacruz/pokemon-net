@@ -1,5 +1,5 @@
 <script setup>
-    import { ref, onMounted, onBeforeMount, defineProps } from 'vue';
+    import { ref, onMounted, onBeforeUnmount, defineProps } from 'vue';
     import { useToast } from 'primevue/usetoast';
 
     import { isAtBottom } from '../common/utility';
@@ -49,7 +49,7 @@
         }
     });
 
-    onBeforeMount(() => {
+    onBeforeUnmount(() => {
         window.onscroll = null;
     });
 </script>
@@ -63,6 +63,7 @@
                 :key="pokemon.id"
                 :pokemon="pokemon"
                 :user-picks="userPicks"
+                :show-picker="true"
                 @show-toast="handleToastEmit"
             />
         </div>

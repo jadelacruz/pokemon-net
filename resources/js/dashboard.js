@@ -15,6 +15,9 @@ import Button from 'primevue/button';
 import Card from 'primevue/card';
 import Panel from 'primevue/panel';
 import Avatar from 'primevue/avatar';
+import Fieldset from 'primevue/fieldset';
+import Divider from 'primevue/divider';
+import Paginator from 'primevue/paginator';
 import 'primevue/resources/themes/mdc-light-deeppurple/theme.css'
 import 'primeicons/primeicons.css';
 
@@ -34,6 +37,9 @@ app.component('Button', Button);
 app.component('Card', Card);
 app.component('Panel', Panel);
 app.component('Avatar', Avatar);
+app.component('Fieldset', Fieldset);
+app.component('Divider', Divider);
+app.component('Paginator', Paginator);
 
 app.mount('#app')
 

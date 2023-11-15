@@ -48,6 +48,32 @@ class PokeApiAdaptor
     }
 
     /**
+     * @param  array $pokemonIds
+     * @return array
+     */
+    public function getById(array $pokemonIds) : array
+    {
+        $stringId = implode(',', $pokemonIds);
+        $query    = <<<GQL
+            query {
+                pokemon_v2_pokemon(where: {id: {_in: [ $stringId ]}}) {
+                    id
+                    height
+                    name
+                    weight
+                    pokemon_v2_pokemonsprites {
+                      id
+                      sprites
+                    }
+                 }
+            }
+        GQL;
+
+        return $this->execute($query)
+            ->json('data.pokemon_v2_pokemon');
+    }
+
+    /**
      * @param string $query
      * @return Response
      */

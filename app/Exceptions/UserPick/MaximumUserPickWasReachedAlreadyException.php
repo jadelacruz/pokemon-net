@@ -8,7 +8,7 @@ use Exception;
  * class MaximumUserPickWasReachedAlready
  * @package App\Exceptions\UserPick
  */
-class MaximumUserPickWasReachedAlready extends Exception
+class MaximumUserPickWasReachedAlreadyException extends Exception
 {
     /**
      * @var int

@@ -18,7 +18,8 @@ class UserResource extends JsonResource
             'id'        => $this->id,
             'firstName' => $this->first_name,
             'lastName'  => $this->last_name,
-            'email'     => $this->email
+            'email'     => $this->email,
+            'picks'     => (!empty($this->picks)) ? new UserPickCollection($this->picks) : []
         ];
     }
 }

@@ -1,20 +1,21 @@
 <script setup>
-    import { ref } from 'vue';
+    import { ref, defineProps } from 'vue';
     import { useRegisterStore } from '../stores/register';
 
     import { handleValidationError, handleAxiosError } from '../common/utility';
     import InputText from 'primevue/inputtext';
     import Button from 'primevue/button';
-    import RegisterRest from '../rest/rest.register';
 
     const emit     = defineEmits([ 'show-toast', 'cancel-registration' ]);
-    const register = { ...useRegisterStore() }
+    const props    = defineProps(['user', 'submit']);
+    const register = (props.user) ? { ...props.user } : { ...useRegisterStore() };
     const errors   = ref({});
+    const { schema } = useRegisterStore();
 
     const submitRegistration = async () => {
         try {
-            const validForm = await register.schema.validate(register, { abortEarly: false });
-            const response  = await RegisterRest.create({
+            const validForm = await schema.validate(register, { abortEarly: false });
+            const response  = await props.submit({
                 firstName : validForm.firstName,
                 lastName  : validForm.lastName,
                 email     : validForm.email,
@@ -25,14 +26,13 @@
             if (response && response.status === 200) {
                 emit('show-toast', {
                     severity: 'success',
-                    info    : 'Registration',
+                    info    : 'Submit',
                     detail  : response.data?.message,
                     life    : 5000
                 });
 
                 emit('cancel-registration');
             }
-
         } catch (e) {
             handleValidationError(errors, e);
             handleAxiosError(errors, e);

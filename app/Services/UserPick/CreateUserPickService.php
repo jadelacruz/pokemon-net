@@ -3,7 +3,7 @@
 namespace App\Services\UserPick;
 
 use App\Enums\UserPickTypeEnum;
-use App\Exceptions\UserPick\MaximumUserPickWasReachedAlready;
+use App\Exceptions\UserPick\MaximumUserPickWasReachedAlreadyException;
 use App\Http\Requests\StoreUserPickRequest;
 use App\Models\User;
 use App\Models\UserPick;
@@ -21,7 +21,7 @@ class CreateUserPickService
     /**
      * @param StoreUserPickRequest $request
      * @return Collection
-     * @throws MaximumUserPickWasReachedAlready
+     * @throws MaximumUserPickWasReachedAlreadyException
      */
     public function handle(StoreUserPickRequest $request): Collection
     {
@@ -68,7 +68,7 @@ class CreateUserPickService
     /**
      * @param Collection $userPickedPokemon
      * @param StoreUserPickRequest $request
-     * @throws MaximumUserPickWasReachedAlready
+     * @throws MaximumUserPickWasReachedAlreadyException
      */
     private function checkMaxLikeDislike(
         Collection $userPickedPokemon,
@@ -83,7 +83,7 @@ class CreateUserPickService
 
         if ($matchCount === self::MAXIMUM_LIKE_AND_DISLIKE) {
             $action = $request->getPickType()->value;
-            throw new MaximumUserPickWasReachedAlready("You have reached maximum numbers of pokemon ${action}");
+            throw new MaximumUserPickWasReachedAlreadyException("You have reached maximum numbers of pokemon ${action}");
         }
     }
 
@@ -105,6 +105,7 @@ class CreateUserPickService
 
         $pickTypeValue = $request->getPickType()->value;
         $counterPick   = $userPickedPokemon
+            ->where('pokemon_id', $request->getPokemonId())
             ->where('pick_type', $counterMap[$pickTypeValue])
             ->first();
 

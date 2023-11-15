@@ -21,12 +21,14 @@ Route::post('user', [UserApiController::class, 'store']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('user', [UserApiController::class, 'show']);
+    Route::put('user', [UserApiController::class, 'update']);
+    Route::get('users', [UserApiController::class, 'list']);
+
 
     Route::prefix('user/pick')->group(function () {
         Route::get('/', [UserPickApiController::class, 'list']);
         Route::post('/', [UserPickApiController::class, 'store']);
     });
-
 
     Route::get('pokemon', [PokemonApiController::class, 'list']);
     Route::post('logout', [AuthApiController::class, 'signOut']);

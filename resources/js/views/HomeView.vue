@@ -5,6 +5,7 @@
     import LoginForm from '../components/LoginForm.vue';
     import Toast from 'primevue/toast';
     import RegisterForm from '../components/RegisterForm.vue';
+    import RegisterRest from '../rest/rest.register';
 
     const modeEnum = Object.freeze({ login: 'login', register: 'register' });
     const toast    = useToast();
@@ -32,6 +33,7 @@
                 <div class="form-group"
                      v-if="mode === modeEnum.register">
                     <RegisterForm
+                        :submit="RegisterRest.create"
                         @show-toast="handleToastEmit"
                         @cancel-registration="showLoginForm"/>
                 </div>

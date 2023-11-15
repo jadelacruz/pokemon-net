@@ -39,11 +39,17 @@
 
     const signOut = async () => {
         try {
+            sessionStorage.removeItem('user');
             await AuthRest.signOut();
             location.replace('/logout');
         } catch (e) {
             console.warn(e);
         }
+    }
+
+    const goToProfile = () => {
+        console.log(user.value);
+        router.push({ name: 'profile' });
     }
 
     onMounted(() => {
@@ -66,9 +72,13 @@
             <template #end>
                 <a href="#" @click="signOut">Logout</a>
                 <Avatar
+                    :pt="{
+                        root: { style: 'cursor: pointer;' }
+                    }"
                     :label="userAvatar"
                     class="avatar"
-                    shape="circle" />
+                    shape="circle"
+                    @click="goToProfile" />
             </template>
         </Menubar>
 

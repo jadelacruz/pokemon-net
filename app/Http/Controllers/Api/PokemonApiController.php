@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\ListPokemonRequest;
-use App\Http\Resources\PokemonResourceCollection;
+use App\Http\Resources\PokemonCollection;
 use App\Services\Pokemon\ListPokemonService\ListPokemonService;
 use Illuminate\Http\JsonResponse;
 
@@ -26,7 +26,7 @@ class PokemonApiController
         $list = $service->handle($request);
 
         return response()
-            ->json(new PokemonResourceCollection($list));
+            ->json(new PokemonCollection($list));
     }
 
 }
