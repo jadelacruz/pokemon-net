@@ -18,12 +18,16 @@ Before proceeding with the project setup, make sure that you have all the indica
 |__Cmder__                   |
 
 ### Clone the Repository
-
+```shell
+git clone https://github.com/jadelacruz/pokemon-net.git
+```
 
 ### Checkout the working branch
+```shell
+git checkout master # or develop
+```
 
 ### Install packages
-
 ```shell
 composer install
 npm install
