@@ -21,7 +21,6 @@ Route::post('authenticate', [AuthController::class, 'auth']);
 
 Route::middleware('auth')->group(function () {
     Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
-
     Route::get('logout', [AuthController::class, 'signOut']);
 });
 

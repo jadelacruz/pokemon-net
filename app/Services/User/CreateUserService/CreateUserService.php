@@ -2,7 +2,7 @@
 
 namespace App\Services\User\CreateUserService;
 
-use App\Http\Requests\UserStoreRequest;
+use App\Http\Requests\StoreUserRequest;
 use App\Models\User;
 
 /**
@@ -12,10 +12,10 @@ use App\Models\User;
 class CreateUserService
 {
     /**
-     * @param UserStoreRequest $request
+     * @param StoreUserRequest $request
      * @return User
      */
-    public function handle(UserStoreRequest $request): User
+    public function handle(StoreUserRequest $request): User
     {
         return User::createRecord(
             firstName: $request->getFirstName(),

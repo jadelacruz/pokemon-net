@@ -1,5 +1,5 @@
 <script setup>
-    import { defineEmits, ref } from 'vue';
+    import { ref } from 'vue';
     import { useCredentialStore } from '../stores/credential';
 
     import { handleValidationError } from '../common/utility';

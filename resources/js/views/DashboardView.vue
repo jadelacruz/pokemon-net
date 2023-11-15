@@ -5,7 +5,7 @@
     import AuthRest from '../rest/rest.auth';
     import UserRest from '../rest/rest.user';
     import Menubar from 'primevue/menubar';
-
+    import pokeballImgUrl from '../../../public/img/pokeball.svg';
 
     const router       = useRouter()
     const initialRoute = '/pokemon';
@@ -35,7 +35,6 @@
         const response = await UserRest.get();
         user.value     = response.data;
         sessionStorage.setItem('user', JSON.stringify(user.value));
-        console.log(userFullName.value);
     }
 
     const signOut = async () => {
@@ -61,7 +60,7 @@
                 <a href="/dashboard">
                     <img class="nav-icon"
                          alt="pokeball.svg"
-                         src="/img/pokeball.svg" />
+                         :src="pokeballImgUrl" />
                 </a>
             </template>
             <template #end>
@@ -73,7 +72,7 @@
             </template>
         </Menubar>
 
-        <RouterView :user="user" />
+        <RouterView />
     </main>
 </template>
 

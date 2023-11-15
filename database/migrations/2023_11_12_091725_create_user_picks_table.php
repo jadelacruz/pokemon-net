@@ -15,7 +15,7 @@ return new class extends Migration
             $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->integer('pokemon_id');
-            $table->enum('pick_type', ['favorite','dislike'])
+            $table->enum('pick_type', ['favorite', 'like', 'dislike'])
                 ->default('favorite');
             $table->softDeletes();
             $table->timestamps();

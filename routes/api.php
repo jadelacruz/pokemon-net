@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserApiController;
+use App\Http\Controllers\Api\UserPickApiController;
 use App\Http\Controllers\Api\AuthApiController;
 use App\Http\Controllers\Api\PokemonApiController;
 
@@ -15,20 +16,20 @@ use App\Http\Controllers\Api\PokemonApiController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-// Auth
 Route::post('auth', [AuthApiController::class, 'auth']);
-// User
 Route::post('user', [UserApiController::class, 'store']);
 
 Route::middleware('auth:sanctum')->group(function () {
-    // Auth
-    Route::post('logout', [AuthApiController::class, 'signOut']);
-
-    // User
     Route::get('user', [UserApiController::class, 'show']);
 
-    // Pokemon
+    Route::prefix('user/pick')->group(function () {
+        Route::get('/', [UserPickApiController::class, 'list']);
+        Route::post('/', [UserPickApiController::class, 'store']);
+    });
+
+
     Route::get('pokemon', [PokemonApiController::class, 'list']);
+    Route::post('logout', [AuthApiController::class, 'signOut']);
 });
 
 

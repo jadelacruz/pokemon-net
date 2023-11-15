@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UserStoreRequest;
+use App\Http\Requests\StoreUserRequest;
 use App\Http\Resources\UserResource;
 use App\Services\User\CreateUserService\CreateUserService;
 use Illuminate\Http\JsonResponse;
@@ -15,12 +15,12 @@ use Illuminate\Http\JsonResponse;
 class UserApiController extends Controller
 {
     /**
-     * @param UserStoreRequest $request
+     * @param StoreUserRequest $request
      * @param CreateUserService $service
      * @return JsonResponse
      */
     public function store(
-        UserStoreRequest $request,
+        StoreUserRequest  $request,
         CreateUserService $service
     ): JsonResponse
     {

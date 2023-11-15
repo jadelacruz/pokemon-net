@@ -2,6 +2,7 @@
     import { defineComponent, ref, computed } from 'vue';
     import Card from 'primevue/card';
     import Button from 'primevue/button';
+    import UserPickRest from '../rest/rest.user-pick';
 
     export default defineComponent({
         components: {
@@ -9,23 +10,61 @@
             Button
         },
         props: {
-            pokemon: Object
+            pokemon: Object,
+            userPicks: Array
         },
         setup(props) {
-            const pokemon = ref({ ...props.pokemon })
+            const pokemon = ref({ ...props.pokemon });
+            const picks   = ref([ ...props.userPicks ]);
+            const picking = ref(false);
+
             const sprite  = computed(() => pokemon.value.sprites.other.dream_world.front_default);
             const pokemonNameTitleCased = computed(() => pokemon.value.name.replace(/\b\w/g, match => match.toUpperCase()))
+            const iconDeterminer = (icon, type) => {
+                const match = picks.value.find(
+                    pick => (pick.pokemonId === pokemon.value.id && pick.pickType === type)
+                );
+
+                if (match) {
+                    return icon + '-fill';
+                }
+
+                return icon;
+            }
+
+            const favoriteIcon = computed(() => iconDeterminer('pi pi-heart', 'favorite'));
+            const likeIcon     = computed(() => iconDeterminer('pi pi-thumbs-up', 'like'));
+            const dislikeIcon  = computed(() => iconDeterminer('pi pi-thumbs-down', 'dislike'));
 
             return {
                 pokemon,
+                picks,
+                picking,
                 sprite,
-                pokemonNameTitleCased
+                pokemonNameTitleCased,
+                favoriteIcon,
+                likeIcon,
+                dislikeIcon
             };
         },
         methods: {
+            async pick(pokemonId, pickType) {
+                try {
+                    if (this.picking) return;
+                    this.picking = true;
+                    const response = await UserPickRest.store({
+                        pokemonId,
+                        pickType
+                    });
 
+                    this.picking = false;
+                    this.picks   = response.data;
+                } catch (e) {
+                    console.error(e);
+                }
 
-        }
+            }
+        },
     });
 </script>
 
@@ -47,18 +86,21 @@
         <template #footer>
             <Button
                 label="Favorite"
-                icon="pi pi-heart"
-                severity="primary"></Button>
+                :icon="favoriteIcon"
+                severity="primary"
+                @click="pick(pokemon.id, 'favorite')"></Button>
 
             <Button
                 label="Like"
-                icon="pi pi-thumbs-up"
-                severity="success"></Button>
+                :icon="likeIcon"
+                severity="success"
+                @click="pick(pokemon.id, 'like')"></Button>
 
             <Button
                 label="Dislike"
-                icon="pi pi-thumbs-down"
-                severity="danger"></Button>
+                :icon="dislikeIcon"
+                severity="danger"
+                @click="pick(pokemon.id, 'dislike')"></Button>
         </template>
     </Card>
 </template>
