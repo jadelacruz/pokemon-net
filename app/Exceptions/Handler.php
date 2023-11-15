@@ -44,11 +44,11 @@ class Handler extends ExceptionHandler
             $message = $e->getMessage();
             $code    = (is_string($e->getCode()) || $e->getCode() === 0)
                 ? 500 : $e->getCode();
-
+            $errors  = method_exists($e, 'errors') ? $e->errors() : [];
             return response()
                 ->json([
                     'message' => $message,
-                    'errors'  => $e->errors() ?? []
+                    'errors'  => $errors
                 ], $code);
         }
 

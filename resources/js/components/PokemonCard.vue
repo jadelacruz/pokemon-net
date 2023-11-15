@@ -60,7 +60,15 @@
                     this.picking = false;
                     this.picks   = response.data;
                 } catch (e) {
-                    console.error(e);
+                    if (e.name === 'AxiosError') {
+                        const { response } = e;
+                        this.$emit('show-toast', {
+                            severity: 'warn',
+                            info: pickType.replace(/\b\w/g, match => match.toUpperCase()),
+                            detail: response.data?.message,
+                            life: 4000
+                        });
+                    }
                 }
 
             }
